@@ -1,0 +1,11 @@
+.card-img-top{
+    min-height: 250px;
+    max-height: 250px;
+    object-fit: contain;
+}
+.card h1{
+    font-size: 20px;
+}
+a{
+    text-decoration: none !important;
+}
