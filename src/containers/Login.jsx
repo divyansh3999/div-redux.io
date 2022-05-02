@@ -2,9 +2,10 @@ import React from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { login, isLoggedin } from "../redux/actions/productAction";
-import { useNavigate } from "react-router-dom";
-import { store } from "../redux/store";
+import { login, error } from "../redux/actions/productAction";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
   const { register, handleSubmit } = useForm();
@@ -13,16 +14,17 @@ export default function Login() {
   const navigate = useNavigate();
   const onSubmit = async (data) =>{
       const url = "http://localhost:4000/api/login";
-      console.log(data);
       await axios.post(url, {
         email: data.email,
         password: data.password
       }).then((response)=>{
-        if (response.status === 200) {
+        if (response.data.success == true) {
           dispatch(login(response.data.token));
           navigate('/');
         }else{
-          console.log(response.data.message);
+          toast.error(response.data.error, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
         }
       }).catch((err) =>{
         console.log("error", err);
@@ -51,6 +53,7 @@ export default function Login() {
                   className="form-control"
                   id="floatingInput"
                   placeholder="name@example.com"
+                  required
                   {...register("email")}
                 />
                 <label htmlFor="floatingInput">Email address</label>
@@ -61,6 +64,7 @@ export default function Login() {
                   className="form-control"
                   id="floatingPassword"
                   placeholder="Password"
+                  required
                   {...register("password")}
                 />
                 <label htmlFor="floatingPassword">Password</label>
@@ -72,17 +76,18 @@ export default function Login() {
                 Login
               </button>
               <hr className="my-4" />
-              <a
-                href="/signup"
+              <Link
+               to="/signup"
                 className="w-100 btn btn-lg btn-primary"
-                type="submit"
+                
               >
                 Create An Account
-              </a>
+              </Link>
             </form>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

@@ -6,12 +6,13 @@ const initialState = {
 
 const signInfo = {
   signInfo: [],
+  // error: "password not matched"
 };
 const loginInfo = {
   loginInfo: [],
 };
 const isLoggedin = {
-  isLoggedin : false
+  isLoggedin: false,
 };
 
 export const productReducer = (state = initialState, { type, payload }) => {
@@ -50,6 +51,6 @@ export const loginReducer = (state = loginInfo, { type, payload }) => {
     case ActionTypes.LOGIN:
       return { ...state, loginInfo: payload };
     default:
-      return state; 
+      return state;
   }
 };

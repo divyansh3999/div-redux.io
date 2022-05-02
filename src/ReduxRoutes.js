@@ -14,9 +14,9 @@ const ReduxRoutes = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route element={<PrivateRoutes />}>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
+            <Route exact path="/" element={<PrivateRoutes />}>
               <Route path="/" element={<ProductListing />}></Route>
               <Route
                 path="/product-component"

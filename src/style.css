@@ -9,3 +9,6 @@
 a{
     text-decoration: none !important;
 }
+.custom-logo img{
+    width: 120px;
+}

@@ -5,20 +5,14 @@ import { login } from "../redux/actions/productAction";
 
 const ProductComponent = () => {
   const products = useSelector((state) => state.allProducts.products);
-  const loginInfo = useSelector((state) => state);
-  const loginStatus = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const logout = () => {
-    dispatch(login(""));
-    navigate('/login');
-  };
+  // const loginInfo = useSelector((state) => state);
+  // const loginStatus = useSelector((state) => state);
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  
   return (
     <>
-      <div className="container">
-        <button className="btn btn-danger my-2" onClick={logout}>
-          Logout
-        </button>
+      <div className="container my-5">
         <div className="row">
           {products.map((product, index) => (
             <div className="col-md-4 col-sm-12" key={index}>
