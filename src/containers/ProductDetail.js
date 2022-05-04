@@ -13,7 +13,6 @@ const ProductDetail = () => {
   const { id, title, price, description, category, image } = product;
   const { productId } = useParams();
   const dispatch = useDispatch();
-  // console.log("product", product);
 
   const productDetails = async () => {
     const detail = await axios
@@ -36,7 +35,14 @@ const ProductDetail = () => {
     <>
       <div className="container my-5">
         {Object.keys(product).length === 0 ? (
-          <div>...Loading</div>
+          <div className="box">
+          <div className="boxChild">
+            <span className="circle"></span>
+            <span className="circle"></span>
+            <span className="circle"></span>
+            <span className="circle"></span>
+          </div>
+        </div>
         ) : (
           <>
             <div className="row" key={id}>
@@ -58,9 +64,9 @@ const ProductDetail = () => {
                   <p>{category}</p>
                 </div>
                 <div className="text-end">
-                <Link to="/" className="btn text-right btn-success">
-                  Back to home
-                </Link>
+                  <Link to="/" className="btn text-right btn-success">
+                    Back to home
+                  </Link>
                 </div>
               </div>
             </div>

@@ -3,7 +3,6 @@ function App() {
   return (
     <>
       <ReduxRoutes></ReduxRoutes>
-      {/* <Navbar></Navbar> */}
     </>
   );
 }

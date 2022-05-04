@@ -1,11 +1,30 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../redux/actions/productAction";
+import { login, setCategory } from "../redux/actions/productAction";
 import { store } from "../redux/store";
-import "../style.css"
+import "../style.css";
 
 const Header = () => {
+  // <!------------ category name -------------->
+  const cateData = useSelector((state) => state.allCategory);
+  // console.log("catedata", cateData);
+  // const { categoryInfo } = cateData;
+  const fetchCategory = () => {
+    axios
+      .get("https://fakestoreapi.com/products/categories")
+      .then((response) => {
+        dispatch(setCategory(response.data));
+      })
+      .catch((err) => console.log("error : ", err));
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
+  // <!------------ end category -------------->
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logout = () => {
@@ -16,12 +35,12 @@ const Header = () => {
   const token = user.login.loginInfo;
   return (
     <>
-      <header class="bg-dark text-white">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <header className="bg-dark text-white">
+        <div className="container">
+          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a
               href="/"
-              class="d-flex custom-logo bg-light align-items-center mb-2 mb-lg-0 text-white text-decoration-none me-5"
+              className="d-flex custom-logo bg-light align-items-center mb-2 mb-lg-0 text-white text-decoration-none me-5"
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/1/1e/RPC-JP_Logo.png"
@@ -29,34 +48,39 @@ const Header = () => {
               />
             </a>
 
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li>
-                <Link to="/" class="nav-link px-2 text-secondary">
-                  Home
+                <Link to="/" className="nav-link px-2 text-secondary">
+                  All Products
                 </Link>
               </li>
-              <li>
-                <a href="#" class="nav-link px-2 text-white">
-                  Features
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link nav-new dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{ color: "#fff" }}
+                >
+                  All Categories
                 </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link px-2 text-white">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link px-2 text-white">
-                  FAQs
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link px-2 text-white">
-                  About
-                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {cateData?.categoryInfo?.map((categories, index) => (
+                    <li key={index}>
+                      <Link
+                        className="text-capitalize dropdown-item"
+                        to={`/category/${categories}`}
+                      >
+                        {categories}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </li>
             </ul>
-            <div class="text-end">
+            <div className="text-end">
               {!token ? (
                 <div>
                   <Link to="/login" className="btn btn-outline-light me-2">

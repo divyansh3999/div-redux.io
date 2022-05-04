@@ -6,14 +6,15 @@ const initialState = {
 
 const signInfo = {
   signInfo: [],
-  // error: "password not matched"
 };
 const loginInfo = {
   loginInfo: [],
 };
-const isLoggedin = {
-  isLoggedin: false,
-};
+const initialCategoryData = [];
+
+const initialProductsCategory = [];
+
+const initialStateProduct = [];
 
 export const productReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -21,6 +22,17 @@ export const productReducer = (state = initialState, { type, payload }) => {
       return { ...state, products: payload };
     case ActionTypes.FETCH_PRODUCTS:
       return { ...state, products: payload };
+    default:
+      return state;
+  }
+};
+
+export const descProductReducer = (state = initialStateProduct, { type, payload }) => {
+  switch (type) {
+    case ActionTypes.SET_DESC_PRODUCTS:
+      return { ...state, descData: payload };
+      case ActionTypes.REMOVE_DESC_PRODUCTS:
+        return {};
     default:
       return state;
   }
@@ -50,6 +62,32 @@ export const loginReducer = (state = loginInfo, { type, payload }) => {
   switch (type) {
     case ActionTypes.LOGIN:
       return { ...state, loginInfo: payload };
+    default:
+      return state;
+  }
+};
+
+export const categoriesData = (
+  state = initialProductsCategory,
+  { type, payload }
+) => {
+  switch (type) {
+    case ActionTypes.FETCH_PRODUCTS_CATEGORIES:
+      return { ...state, categoryInfo: payload };
+    default:
+      return state;
+  }
+};
+
+export const selectedCategoryData = (
+  state = initialCategoryData,
+  { type, payload }
+) => {
+  switch (type) {
+    case ActionTypes.SELECTED_PRODUCT_CATEGORY:
+      return { ...state, payload };
+    case ActionTypes.REMOVE_SELECTED_PRODUCT_CATEGORY:
+      return {};
     default:
       return state;
   }
