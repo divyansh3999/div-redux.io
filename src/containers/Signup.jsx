@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../redux/actions/productAction";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Signup() {
   const { register, handleSubmit } = useForm();
@@ -11,7 +13,6 @@ export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    if (data.password === data.confirmPassword) {
       const detail = axios
       .post(`http://localhost:4000/api/signup`, {
         firstname: data.firstName,
@@ -19,19 +20,28 @@ export default function Signup() {
         email: data.email,
         password: data.password,
         confirmpassword: data.confirmPassword,
-      }).then(()=> {
-        navigate('/login');
+      }).then((res)=> {
+        // console.log("res",res)
+        if (res?.data?.error) {
+          toast.error(res.data.error, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        } else {
+          dispatch(signup(data));
+          navigate('/login');
+        }
       })
-      .catch((err) => {
-        console.log("err", err);
+      .catch((error) => {
+        if (error.response) {
+          toast.error(error.response.data.error, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
       });
-      dispatch(signup(data));
-    } else {
-      console.log("password not matched");
-    }
   };
   return (
     <>
+    {/* <h5>{error}</h5> */}
       <div className="container col-xl-10 col-xxl-8 px-4 py-5">
         <div className="row align-items-center g-lg-5 py-5">
           <div className="col-lg-7 text-center text-lg-start">
@@ -113,12 +123,13 @@ export default function Signup() {
               </button>
               <hr className="my-4" />
               <small className="text-muted">
-                By clicking Sign up, you agree to the terms of use.
+                Already have an account ! Please <Link to="/login">Login</Link>
               </small>
             </div>
           </form>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }
