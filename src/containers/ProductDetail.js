@@ -36,13 +36,13 @@ const ProductDetail = () => {
       <div className="container my-5">
         {Object.keys(product).length === 0 ? (
           <div className="box">
-          <div className="boxChild">
-            <span className="circle"></span>
-            <span className="circle"></span>
-            <span className="circle"></span>
-            <span className="circle"></span>
+            <div className="boxChild">
+              <span className="circle"></span>
+              <span className="circle"></span>
+              <span className="circle"></span>
+              <span className="circle"></span>
+            </div>
           </div>
-        </div>
         ) : (
           <>
             <div className="row" key={id}>

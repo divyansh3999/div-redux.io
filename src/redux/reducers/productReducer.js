@@ -27,12 +27,15 @@ export const productReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export const descProductReducer = (state = initialStateProduct, { type, payload }) => {
+export const descProductReducer = (
+  state = initialStateProduct,
+  { type, payload }
+) => {
   switch (type) {
     case ActionTypes.SET_DESC_PRODUCTS:
       return { ...state, descData: payload };
-      case ActionTypes.REMOVE_DESC_PRODUCTS:
-        return {};
+    case ActionTypes.REMOVE_DESC_PRODUCTS:
+      return {};
     default:
       return state;
   }
